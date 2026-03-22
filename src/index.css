@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* Custom theme for Tailwind v4 */
+@theme {
+  --color-electric-blue: #2563eb;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Premium Global Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+  /* Tailwind slate-50 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  /* Tailwind slate-300 */
+  border-radius: 10px;
+  border: 3px solid #f8fafc;
+  /* Gives a "floating" padding to the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+  /* Tailwind blue-500 on hover */
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-33.3333%);
+    /* Move by one third for seamless loop */
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Custom cursor enhancements */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Each section manages its own background through its component */
+section {
+  overflow: hidden;
+  /* Prevent absolute watermarks from bleeding outside */
+}
