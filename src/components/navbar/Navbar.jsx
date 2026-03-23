@@ -59,11 +59,9 @@ const Navbar = () => {
           >
             <div className="absolute inset-0 border-[2px] border-gray-900 rounded-xl group-hover:scale-110 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]" />
             <div className="absolute inset-0 border-[2px] border-transparent border-t-blue-600 border-l-blue-400 rounded-xl opacity-0 group-hover:opacity-100 group-hover:rotate-180 group-hover:scale-[1.3] transition-all duration-700" />
-            <img 
-              src="/favicon.png" 
-              alt="Raghav Ramani Logo" 
-              className="w-full h-full object-contain rounded-lg p-1 group-hover:scale-110 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] z-10" 
-            />
+            <span className="font-black text-gray-900 z-10 group-hover:text-blue-600 transition-all duration-300 text-sm tracking-tight">
+              RR
+            </span>
           </motion.a>
 
           {/* Desktop Menu */}
