@@ -139,7 +139,7 @@ const Hero = () => {
               boxShadow: "0 10px 30px -10px rgba(37, 99, 235, 0.4)",
             }}
             whileTap={{ scale: 0.95 }}
-            href="https://drive.google.com/file/d/1YcB4F_I7xqimI4zpSYlib6DcAVe6_FwF/view?usp=sharing"
+            href="https://res.cloudinary.com/duobzi17g/raw/upload/v1774266194/resumes/k9a2wixeoemspqmho0q7.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="relative overflow-hidden px-8 py-3.5 bg-blue-50/50 border-2 border-blue-500/30 text-blue-600 text-sm font-bold tracking-wide uppercase rounded-full hover:border-blue-500 transition-all flex items-center justify-center gap-2 group"
