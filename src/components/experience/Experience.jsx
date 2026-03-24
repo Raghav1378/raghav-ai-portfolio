@@ -3,39 +3,9 @@ import { motion } from 'framer-motion';
 const Experience = () => {
   const entries = [
     {
-      year: '2022',
-      title: 'Foundation in AI & ML',
-      description: 'Started B.Tech in CSE (AI & ML) at JECRC University, Jaipur, establishing core ML fundamentals, deep learning, NLP, and MLOps.',
-    },
-    {
-      year: 'Aug 2023',
-      title: 'Teaching Assistant (Java)',
-      description: 'Supported 100+ students through Java, Object-Oriented Programming, DSA, and technical interview preparation at Accio Job.',
-    },
-    {
-      year: 'Nov 2023',
-      title: 'GSEA University Winner',
-      description: 'Won the Global Student Entrepreneur Awards university round for Suraksha Nivesh, a stock market scam detection system.',
-    },
-    {
-      year: 'Mid 2024',
-      title: 'Advanced GenAI Integration',
-      description: 'Transitioned deep into the GenAI stack, focusing specifically on LangChain, LangGraph, RAG pipelines, and multi-agent systems.',
-    },
-    {
-      year: 'Jan 2025',
-      title: 'ArthMitra AI',
-      description: 'Built an AI-powered financial security platform utilizing a multi-agent LangGraph system and financial RAG over RBI documents.',
-    },
-    {
-      year: 'Aug 2025',
-      title: 'AI/ML Intern at Klear AI',
-      description: 'Architected production RAG pipelines, LangGraph workflows, FastAPI microservices, and specialized MCP server integrations.',
-    },
-    {
-      year: 'Nov 2025',
-      title: 'LangChain Academy',
-      description: 'Completed 9 official certifications across LangChain, LangGraph, LangSmith, and advanced agentic architectures.',
+      year: 'Present',
+      title: 'Legal AI System',
+      description: 'Built a 7-stage deterministic multi-agent pipeline for structured Indian Supreme Court judgment retrieval (1950–2024).',
     },
     {
       year: 'Early 2026',
@@ -43,9 +13,39 @@ const Experience = () => {
       description: 'Developing production AI systems while expanding into full-stack architecture using React, FastAPI, Node.js, and Qdrant.',
     },
     {
-      year: 'Present',
-      title: 'Legal AI System',
-      description: 'Built a 7-stage deterministic multi-agent pipeline for structured Indian Supreme Court judgment retrieval (1950–2024).',
+      year: 'Nov 2025',
+      title: 'LangChain Academy',
+      description: 'Completed 9 official certifications across LangChain, LangGraph, LangSmith, and advanced agentic architectures.',
+    },
+    {
+      year: 'Aug 2025',
+      title: 'AI/ML Intern at Klear AI',
+      description: 'Architected production RAG pipelines, LangGraph workflows, FastAPI microservices, and specialized MCP server integrations.',
+    },
+    {
+      year: 'Jan 2025',
+      title: 'ArthMitra AI',
+      description: 'Built an AI-powered financial security platform utilizing a multi-agent LangGraph system and financial RAG over RBI documents.',
+    },
+    {
+      year: 'Mid 2024',
+      title: 'Advanced GenAI Integration',
+      description: 'Transitioned deep into the GenAI stack, focusing specifically on LangChain, LangGraph, RAG pipelines, and multi-agent systems.',
+    },
+    {
+      year: 'Nov 2023',
+      title: 'GSEA University Winner',
+      description: 'Won the Global Student Entrepreneur Awards university round for Suraksha Nivesh, a stock market scam detection system.',
+    },
+    {
+      year: 'Aug 2023',
+      title: 'Teaching Assistant (Java)',
+      description: 'Supported 100+ students through Java, Object-Oriented Programming, DSA, and technical interview preparation at Accio Job.',
+    },
+    {
+      year: '2022',
+      title: 'Foundation in AI & ML',
+      description: 'Started B.Tech in CSE (AI & ML) at JECRC University, Jaipur, establishing core ML fundamentals, deep learning, NLP, and MLOps.',
     },
   ];
 
