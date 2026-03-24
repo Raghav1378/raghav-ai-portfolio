@@ -66,9 +66,7 @@ const Experience = () => {
       transition={{ duration: 0.8 }}
       className="relative py-24 bg-white overflow-hidden"
     >
-
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
         
         {/* Section heading & Intro */}
         <div className="text-center mb-24 relative z-20">
@@ -102,7 +100,7 @@ const Experience = () => {
         <div className="relative">
           {/* Vertical center line */}
           <motion.div
-            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-100 via-blue-200 to-transparent -translate-x-1/2 md:translate-x-0 md:-ml-0.5 rounded-full"
+            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-blue-400 to-blue-200 -translate-x-1/2 md:translate-x-0 rounded-full"
             initial={{ scaleY: 0, originY: 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true }}
@@ -111,7 +109,7 @@ const Experience = () => {
           />
 
           {/* Timeline entries */}
-          <div className="space-y-16">
+          <div className="space-y-12 md:space-y-0">
             {entries.map((entry, index) => {
               const isLeft = index % 2 === 0;
               return (
@@ -121,68 +119,48 @@ const Experience = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.7, delay: 0.1 }}
-                  className="relative flex flex-col md:flex-row md:items-center group cursor-default"
+                  className={`relative flex items-center justify-between w-full mb-12 group`}
                 >
-                  {/* Left card */}
-                  {isLeft ? (
-                    <>
-                      <div className="w-full md:w-1/2 pl-16 md:pl-0 md:pr-14 text-left md:text-right relative z-10">
-                        <motion.div 
-                          whileHover={{ y: -5 }}
-                          className="bg-white border border-gray-100 rounded-[24px] shadow-lg p-8 inline-block w-full transition-all duration-500 hover:shadow-[0_20px_40px_rgba(37,99,235,0.12)] group-hover:border-blue-200"
-                        >
-                          <div className={`flex items-center gap-3 mb-4 flex-wrap md:justify-end`}>
-                            <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-wide bg-gray-50 text-gray-500 rounded-full transform group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                              {entry.year}
-                            </span>
-                            <span className="inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-blue-50 text-blue-600 rounded-full border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                              {entry.category}
-                            </span>
-                          </div>
-                          <h3 className="text-xl font-extrabold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors uppercase tracking-wide">{entry.title}</h3>
-                          <p className="text-gray-500 font-medium leading-relaxed text-[15px]">{entry.description}</p>
-                        </motion.div>
-                      </div>
-                      {/* Centre dot */}
+                  {/* Card logic */}
+                  <div className={`flex w-full ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
+                    
+                    {/* Content Card container */}
+                    <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isLeft ? 'md:pr-14' : 'md:pl-14'}`}>
                       <motion.div 
-                         initial={{ scale: 0 }}
-                         whileInView={{ scale: 1 }}
-                         transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
-                         viewport={{ once: true }}
-                         className="absolute left-6 md:left-1/2 top-10 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-blue-400 border-[3px] border-white shadow-[0_0_10px_rgba(59,130,246,0.2)] z-20 group-hover:scale-[1.8] group-hover:bg-blue-600 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] transition-all duration-300 ease-out" 
-                      />
-                      <div className="hidden md:block w-1/2" />
-                    </>
-                  ) : (
-                    <>
-                      <div className="hidden md:block w-1/2" />
-                      {/* Centre dot */}
-                      <motion.div 
-                         initial={{ scale: 0 }}
-                         whileInView={{ scale: 1 }}
-                         transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
-                         viewport={{ once: true }}
-                         className="absolute left-6 md:left-1/2 top-10 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-blue-400 border-[3px] border-white shadow-[0_0_10px_rgba(59,130,246,0.2)] z-20 group-hover:scale-[1.8] group-hover:bg-blue-600 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] transition-all duration-300 ease-out" 
-                      />
-                      <div className="w-full md:w-1/2 pl-16 md:pl-14 text-left relative z-10">
-                        <motion.div 
-                          whileHover={{ y: -5 }}
-                          className="bg-white border border-gray-100 rounded-[24px] shadow-lg p-8 inline-block w-full transition-all duration-500 hover:shadow-[0_20px_40px_rgba(37,99,235,0.12)] group-hover:border-blue-200"
-                        >
-                          <div className={`flex items-center gap-3 mb-4 flex-wrap md:justify-start`}>
-                            <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-wide bg-gray-50 text-gray-500 rounded-full transform group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                              {entry.year}
-                            </span>
-                            <span className="inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-blue-50 text-blue-600 rounded-full border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                              {entry.category}
-                            </span>
-                          </div>
-                          <h3 className="text-xl font-extrabold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors uppercase tracking-wide">{entry.title}</h3>
-                          <p className="text-gray-500 font-medium leading-relaxed text-[15px]">{entry.description}</p>
-                        </motion.div>
-                      </div>
-                    </>
-                  )}
+                        whileHover={{ y: -5 }}
+                        className={`bg-white border border-gray-100 rounded-[24px] shadow-lg p-8 w-full transition-all duration-500 hover:shadow-[0_20px_40px_rgba(37,99,235,0.12)] group-hover:border-blue-200 cursor-default text-left`}
+                      >
+                        {/* Date & Badge Pill - sits above title */}
+                        <div className={`flex items-center gap-3 mb-4 flex-wrap justify-start`}>
+                          <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-wide bg-gray-50 text-gray-500 rounded-full transform group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                            {entry.year}
+                          </span>
+                          <span className="inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-blue-50 text-blue-600 rounded-full border border-blue-100 group-hover:bg-white group-hover:text-blue-600 transition-all duration-300">
+                            {entry.category}
+                          </span>
+                        </div>
+                        
+                        <h3 className="text-xl font-extrabold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors uppercase tracking-wide text-left">
+                          {entry.title}
+                        </h3>
+                        <p className="text-gray-500 font-medium leading-relaxed text-[15px] text-left">
+                          {entry.description}
+                        </p>
+                      </motion.div>
+                    </div>
+
+                    {/* Placeholder for symmetry on desktop */}
+                    <div className="hidden md:block w-1/2" />
+                  </div>
+
+                  {/* Connector Dot - perfectly centered on line */}
+                  <motion.div 
+                     initial={{ scale: 0 }}
+                     whileInView={{ scale: 1 }}
+                     transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
+                     viewport={{ once: true }}
+                     className="absolute left-6 md:left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-blue-400 border-[3px] border-white shadow-[0_0_10px_rgba(59,130,246,0.2)] z-20 group-hover:scale-[1.8] group-hover:bg-blue-600 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] transition-all duration-300 ease-out" 
+                  />
                 </motion.div>
               );
             })}
