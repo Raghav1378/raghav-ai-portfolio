@@ -5,46 +5,55 @@ const Experience = () => {
     {
       year: 'Present',
       title: 'Legal AI System',
-      description: 'Built a 7-stage deterministic multi-agent pipeline for structured Indian Supreme Court judgment retrieval (1950–2024).',
+      category: 'Project',
+      description: 'Architected a 7-stage deterministic multi-agent pipeline with hallucination guards, Qdrant vector retrieval, and Groq Llama 3 — ingesting 74 years of Indian Supreme Court judgments (1950–2024).',
     },
     {
-      year: 'Early 2026',
+      year: 'Feb 2026',
       title: 'AI/ML Intern at AASVAA',
+      category: 'Internship',
       description: 'Developing production AI systems while expanding into full-stack architecture using React, FastAPI, Node.js, and Qdrant.',
     },
     {
       year: 'Nov 2025',
       title: 'LangChain Academy',
+      category: 'Certification',
       description: 'Completed 9 official certifications across LangChain, LangGraph, LangSmith, and advanced agentic architectures.',
     },
     {
       year: 'Aug 2025',
       title: 'AI/ML Intern at Klear AI',
+      category: 'Internship',
       description: 'Architected production RAG pipelines, LangGraph workflows, FastAPI microservices, and specialized MCP server integrations.',
     },
     {
       year: 'Jan 2025',
       title: 'ArthMitra AI',
+      category: 'Project',
       description: 'Built an AI-powered financial security platform utilizing a multi-agent LangGraph system and financial RAG over RBI documents.',
     },
     {
-      year: 'Mid 2024',
+      year: 'Jun 2024',
       title: 'Advanced GenAI Integration',
+      category: 'Milestone',
       description: 'Transitioned deep into the GenAI stack, focusing specifically on LangChain, LangGraph, RAG pipelines, and multi-agent systems.',
     },
     {
       year: 'Nov 2023',
       title: 'GSEA University Winner',
-      description: 'Won the Global Student Entrepreneur Awards university round for Suraksha Nivesh, a stock market scam detection system.',
+      category: 'Achievement',
+      description: 'Built an ML-powered stock market scam detection system using NLP classification. Won the university round of the Global Student Entrepreneur Awards for Suraksha Nivesh.',
     },
     {
       year: 'Aug 2023',
       title: 'Teaching Assistant (Java)',
-      description: 'Supported 100+ students through Java, Object-Oriented Programming, DSA, and technical interview preparation at Accio Job.',
+      category: 'Work',
+      description: 'Mentored 100+ students in Java, OOP, and DSA — sharpened core fundamentals while building real teaching and communication skills at Accio Job.',
     },
     {
-      year: '2022',
+      year: 'Aug 2022',
       title: 'Foundation in AI & ML',
+      category: 'Education',
       description: 'Started B.Tech in CSE (AI & ML) at JECRC University, Jaipur, establishing core ML fundamentals, deep learning, NLP, and MLOps.',
     },
   ];
@@ -122,9 +131,14 @@ const Experience = () => {
                           whileHover={{ y: -5 }}
                           className="bg-white border border-gray-100 rounded-[24px] shadow-lg p-8 inline-block w-full transition-all duration-500 hover:shadow-[0_20px_40px_rgba(37,99,235,0.12)] group-hover:border-blue-200"
                         >
-                          <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-wide bg-gray-50 text-gray-500 rounded-full mb-4 transform group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                            {entry.year}
-                          </span>
+                          <div className={`flex items-center gap-3 mb-4 flex-wrap md:justify-end`}>
+                            <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-wide bg-gray-50 text-gray-500 rounded-full transform group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                              {entry.year}
+                            </span>
+                            <span className="inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-blue-50 text-blue-600 rounded-full border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                              {entry.category}
+                            </span>
+                          </div>
                           <h3 className="text-xl font-extrabold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors uppercase tracking-wide">{entry.title}</h3>
                           <p className="text-gray-500 font-medium leading-relaxed text-[15px]">{entry.description}</p>
                         </motion.div>
@@ -155,9 +169,14 @@ const Experience = () => {
                           whileHover={{ y: -5 }}
                           className="bg-white border border-gray-100 rounded-[24px] shadow-lg p-8 inline-block w-full transition-all duration-500 hover:shadow-[0_20px_40px_rgba(37,99,235,0.12)] group-hover:border-blue-200"
                         >
-                          <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-wide bg-gray-50 text-gray-500 rounded-full mb-4 transform group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                            {entry.year}
-                          </span>
+                          <div className={`flex items-center gap-3 mb-4 flex-wrap md:justify-start`}>
+                            <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-wide bg-gray-50 text-gray-500 rounded-full transform group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                              {entry.year}
+                            </span>
+                            <span className="inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-blue-50 text-blue-600 rounded-full border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                              {entry.category}
+                            </span>
+                          </div>
                           <h3 className="text-xl font-extrabold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors uppercase tracking-wide">{entry.title}</h3>
                           <p className="text-gray-500 font-medium leading-relaxed text-[15px]">{entry.description}</p>
                         </motion.div>

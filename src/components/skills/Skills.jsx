@@ -20,7 +20,7 @@ const Skills = () => {
     {
       title: 'BACKEND',
       color: 'bg-purple-500',
-      skills: ['FastAPI', 'Flask', 'Python', 'Async Python']
+      skills: ['FastAPI', 'Python', 'Async Python', 'Qdrant']
     },
     {
       title: 'DATA & NLP',
@@ -30,7 +30,7 @@ const Skills = () => {
     {
       title: 'FRONTEND & TOOLS',
       color: 'bg-cyan-500',
-      skills: ['React', 'JavaScript', 'Streamlit', 'Git', 'Docker', 'VS Code', 'uv']
+      skills: ['React', 'JavaScript', 'Node.js', 'Git', 'Docker', 'VS Code', 'uv']
     }
   ];
 
