@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { RESUME_URL } from '../../config/resume';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -85,7 +86,7 @@ const Navbar = () => {
                 boxShadow: "0 10px 30px -10px rgba(37, 99, 235, 0.4)",
               }}
               whileTap={{ scale: 0.98 }}
-              href="https://res.cloudinary.com/duobzi17g/raw/upload/v1774266194/resumes/k9a2wixeoemspqmho0q7.pdf"
+              href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="relative overflow-hidden px-6 py-2.5 rounded-full text-[13px] font-bold tracking-wide transition-all border-2 border-blue-500/30 hover:border-blue-500 bg-blue-50/50 text-blue-600 flex items-center gap-2 group"
@@ -156,7 +157,7 @@ const Navbar = () => {
               <motion.div variants={itemVariants} className="pt-4 flex flex-col space-y-3">
                 <motion.a
                   whileTap={{ scale: 0.97 }}
-                  href="https://res.cloudinary.com/duobzi17g/raw/upload/v1774266194/resumes/k9a2wixeoemspqmho0q7.pdf"
+                  href={RESUME_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}

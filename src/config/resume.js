@@ -1,0 +1,3 @@
+export const RESUME_URL =
+  import.meta.env.VITE_RESUME_URL ||
+  'https://res.cloudinary.com/duobzi17g/raw/upload/v1774266194/resumes/k9a2wixeoemspqmho0q7.pdf';
