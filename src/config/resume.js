@@ -1,3 +1,3 @@
 export const RESUME_URL =
   import.meta.env.VITE_RESUME_URL ||
-  'https://res.cloudinary.com/duobzi17g/raw/upload/v1774266194/resumes/k9a2wixeoemspqmho0q7.pdf';
+  'https://8b4xcdwusoufxr0t.public.blob.vercel-storage.com/raghav_updated_resume.pdf';
