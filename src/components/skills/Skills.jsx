@@ -66,7 +66,7 @@ const Skills = () => {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: catIndex * 0.1 }}
-              className="relative group p-[2px] rounded-[26px] overflow-hidden hover:shadow-2xl transition-all duration-300"
+              className="relative group p-[2px] rounded-[26px] overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
               {/* Spinning Rainbow LED Trail (Hidden by default, shown on hover) */}
               <div
@@ -75,7 +75,7 @@ const Skills = () => {
               />
 
               {/* Inner White Box Layer */}
-              <div className="relative h-full bg-white/95 backdrop-blur-md p-8 rounded-[24px] z-10 w-full transition-all duration-300">
+              <div className="relative h-full bg-white border border-gray-200/80 p-8 rounded-[24px] z-10 w-full transition-all duration-300">
                 <div className="flex items-center gap-3 mb-6">
                   <div className={`w-3 h-3 rounded-full ${category.color} shadow-sm flex-shrink-0`} />
                   <h3 className="text-[1.1rem] font-extrabold tracking-wide text-gray-900 uppercase group-hover:text-blue-600 transition-colors">
