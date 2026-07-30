@@ -105,7 +105,7 @@ const About = () => {
                 {/* Front side (Your Photo) */}
                 <div className="absolute inset-0 [backface-visibility:hidden] rounded-full overflow-hidden border-[8px] border-white bg-gray-100">
                   <img
-                    src="/profile.jpeg"
+                    src={`${import.meta.env.BASE_URL}profile.jpeg`}
                     alt="Raghav Ramani"
                     className="w-full h-full object-cover object-[center_top] transform scale-105"
                   />
