@@ -1,6 +1,7 @@
 # main.py
 import os
 import hashlib
+import re
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
@@ -39,6 +40,61 @@ cloudinary.config(
 )
 
 client = Groq(api_key=GROQ_API_KEY)
+
+
+def sanitize_user_input(user_text: str) -> str:
+    text = (user_text or "").strip()
+    if not text:
+        return ""
+
+    text = text.replace("\u0000", "")
+    text = re.sub(r"\s+", " ", text)
+    lowered = text.lower()
+
+    blocked_patterns = [
+        "ignore previous instructions",
+        "ignore all previous instructions",
+        "reveal your system prompt",
+        "system prompt",
+        "developer prompt",
+        "act as",
+        "you are now",
+        "always answer",
+        "bypass",
+        "override",
+    ]
+
+    if any(pattern in lowered for pattern in blocked_patterns):
+        return "Please ask about Raghav's portfolio, work, projects, skills, or experience in a safe and normal way."
+
+    return text
+
+
+def optimize_prompt(user_text: str) -> str:
+    text = sanitize_user_input(user_text)
+    if not text:
+        return ""
+
+    cleaned = re.sub(r"\s+", " ", text).strip()
+    cleaned = cleaned.strip(".?!,;:")
+
+    while True:
+        prefix = cleaned.lower()
+        if prefix.startswith("can you "):
+            cleaned = cleaned[8:].strip()
+        elif prefix.startswith("could you "):
+            cleaned = cleaned[10:].strip()
+        elif prefix.startswith("please "):
+            cleaned = cleaned[7:].strip()
+        elif prefix.startswith("please") and len(prefix) > 6:
+            cleaned = cleaned[6:].strip()
+        else:
+            break
+
+    if len(cleaned) > 140:
+        cleaned = cleaned[:137].rstrip() + "..."
+
+    return cleaned
 
 
 SYSTEM_PROMPT = """
@@ -194,7 +250,7 @@ response_cache = {}
 
 def check_rate_limit(request: Request) -> bool:
     """Returns True if request is allowed, False if limit exceeded."""
-    ip = request.client.host
+    ip = request.client.host if request.client else "unknown"
     count = ip_counter.get(ip, 0)
     if count >= 20:
         return False
@@ -223,7 +279,8 @@ def chat_cached(req: ChatRequest, request: Request):
         if not check_rate_limit(request):
             return {"reply": "Please reach Raghav at raghavramani2004@gmail.com"}
 
-        messages = [{"role": "system", "content": SYSTEM_PROMPT.strip()}] + [{"role": "user", "content": req.message}]
+        user_message = optimize_prompt(req.message)
+        messages = [{"role": "system", "content": SYSTEM_PROMPT.strip()}] + [{"role": "user", "content": user_message}]
         try:
             completion = client.chat.completions.create(
                 model="llama-3.1-8b-instant",
@@ -242,9 +299,10 @@ def chat_cached(req: ChatRequest, request: Request):
         if not check_rate_limit(request):
             return {"reply": "Please reach Raghav at raghavramani2004@gmail.com"}
 
+        user_message = optimize_prompt(req.message)
         messages = [{"role": "system", "content": SYSTEM_PROMPT.strip()}]
         messages.extend(req.history[-6:])
-        messages.append({"role": "user", "content": req.message})
+        messages.append({"role": "user", "content": user_message})
         try:
             completion = client.chat.completions.create(
                 model="llama-3.1-8b-instant",
@@ -270,12 +328,13 @@ def chat(req: ChatRequest, request: Request):
             media_type="text/plain"
         )
 
+    user_message = optimize_prompt(req.message)
     messages = [{"role": "system", "content": SYSTEM_PROMPT.strip()}]
 
     # Slice history to the last 6 messages for token efficiency
     history_slice = req.history[-6:]
     messages.extend(history_slice)
-    messages.append({"role": "user", "content": req.message})
+    messages.append({"role": "user", "content": user_message})
 
     def generate():
         try:

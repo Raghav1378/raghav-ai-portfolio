@@ -2,6 +2,22 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'raghavramani2004@gmail.com';
+const REQUEST_TIMEOUT_MS = 15000;
+const RETRY_ATTEMPTS = 1;
+
+const fetchWithTimeout = async (url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+};
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,39 +55,41 @@ const Chatbot = () => {
 
     const userMessage = { id: Date.now(), text: trimmed, isUser: true };
     const historyForAPI = buildHistory(messages);
-    
+
     setMessages([...messages, userMessage]);
     setInput('');
     setIsLoading(true);
 
-    // Subtle 300ms thinking placeholder to prevent UI flashing on instant cache hits
     const thinkingTimeout = setTimeout(() => {
       setShowThinking(true);
     }, 300);
 
-    try {
-      if (historyForAPI.length === 0) {
-        // Smart routing logic YES condition: Empty history triggers `/chat/cached` JSON endpoint
-        const res = await fetch(`${API_URL}/chat/cached`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: trimmed, history: [] }),
-        });
+    let lastError = null;
 
-        clearTimeout(thinkingTimeout);
-        setShowThinking(false);
-        setIsLoading(false);
+    for (let attempt = 0; attempt <= RETRY_ATTEMPTS; attempt += 1) {
+      try {
+        if (historyForAPI.length === 0) {
+          const res = await fetchWithTimeout(`${API_URL}/chat/cached`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: trimmed, history: [] }),
+          });
 
-        if (!res.ok) throw new Error('Network error');
-        const data = await res.json();
+          clearTimeout(thinkingTimeout);
+          setShowThinking(false);
+          setIsLoading(false);
 
-        setMessages((prev) => [
-          ...prev,
-          { id: Date.now() + 1, text: data.reply, isUser: false },
-        ]);
-      } else {
-        // Smart routing logic NO condition: Non-empty history triggers `/chat` streaming endpoint
-        const res = await fetch(`${API_URL}/chat`, {
+          if (!res.ok) throw new Error('Network error');
+          const data = await res.json();
+
+          setMessages((prev) => [
+            ...prev,
+            { id: Date.now() + 1, text: data.reply, isUser: false },
+          ]);
+          return;
+        }
+
+        const res = await fetchWithTimeout(`${API_URL}/chat`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: trimmed, history: historyForAPI }),
@@ -79,7 +97,9 @@ const Chatbot = () => {
 
         if (!res.ok) throw new Error('Network error');
 
-        const reader = res.body.getReader();
+        const reader = res.body?.getReader();
+        if (!reader) throw new Error('No stream available');
+
         const decoder = new TextDecoder('utf-8');
         let botMessageId = Date.now() + 1;
         let responseText = '';
@@ -89,8 +109,7 @@ const Chatbot = () => {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          
-          // Clear loading states and configure placeholder block text right when first chunk arrives
+
           if (responseText === '') {
             clearTimeout(thinkingTimeout);
             setShowThinking(false);
@@ -101,35 +120,43 @@ const Chatbot = () => {
             ]);
           }
 
-          // Decode values as they arrive
           const chunk = decoder.decode(value, { stream: true });
           responseText += chunk;
-          
-          setMessages((prev) => 
-            prev.map(msg => 
-              msg.id === botMessageId 
-                ? { ...msg, text: responseText } 
+
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === botMessageId
+                ? { ...msg, text: responseText }
                 : msg
             )
           );
         }
-        setIsStreaming(false); // Gracefully finish stream loop
+
+        setIsStreaming(false);
+        return;
+      } catch (error) {
+        lastError = error;
+        if (attempt < RETRY_ATTEMPTS) {
+          await wait(600);
+          continue;
+        }
       }
-    } catch {
-      // Re-enable and reset bounds safely
-      clearTimeout(thinkingTimeout);
-      setShowThinking(false);
-      setIsLoading(false);
-      setIsStreaming(false);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          text: 'Something went wrong. Reach Raghav at raghavramani2004@gmail.com',
-          isUser: false,
-        },
-      ]);
     }
+
+    clearTimeout(thinkingTimeout);
+    setShowThinking(false);
+    setIsLoading(false);
+    setIsStreaming(false);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: Date.now() + 1,
+        text: lastError?.name === 'AbortError'
+          ? 'The chatbot is taking too long to respond. Please try again in a moment.'
+          : `Something went wrong. Reach Raghav at ${CONTACT_EMAIL}`,
+        isUser: false,
+      },
+    ]);
   };
 
   return (
@@ -182,8 +209,8 @@ const Chatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="fixed bottom-24 right-6 w-[360px] md:w-96 bg-white rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-100"
-            style={{ maxHeight: '70vh' }}
+            className="fixed bottom-20 right-3 left-3 sm:right-6 sm:left-auto w-auto sm:w-[360px] md:w-96 max-w-[calc(100vw-1.5rem)] bg-white rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-100"
+            style={{ maxHeight: '78vh' }}
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-5 py-4 bg-white border-b border-gray-100">
@@ -210,7 +237,7 @@ const Chatbot = () => {
                   className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+                    className={`max-w-[88%] sm:max-w-[80%] px-3 sm:px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                       message.isUser
                         ? 'bg-blue-600 text-white rounded-br-sm'
                         : 'bg-gray-100 text-gray-800 rounded-bl-sm'
@@ -257,7 +284,7 @@ const Chatbot = () => {
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask about Raghav…"
                   disabled={isLoading || isStreaming}
-                  className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 transition-all disabled:opacity-50"
+                  className="flex-1 px-3 sm:px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 transition-all disabled:opacity-50"
                 />
                 <button
                   onClick={handleSend}

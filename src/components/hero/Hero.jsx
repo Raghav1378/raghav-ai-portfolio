@@ -75,7 +75,7 @@ const Hero = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-6 bg-white overflow-hidden"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 pb-24 sm:pb-28 lg:pb-32 bg-white overflow-hidden"
     >
       <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-80" />
 
@@ -118,7 +118,7 @@ const Hero = () => {
           </motion.p>
         </div>
 
-        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w-full sm:w-auto overflow-hidden p-2">
+        <div className="flex flex-col sm:flex-row w-full max-w-[320px] sm:max-w-none space-y-3 sm:space-y-0 sm:space-x-4 justify-center overflow-hidden p-2">
           <motion.a
             initial={{ y: '100%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -175,7 +175,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 2 }}
-        className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
+        className="hidden sm:flex absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 flex-col items-center z-20"
       >
         <span className="text-gray-400 text-[11px] mb-3 font-bold uppercase tracking-[0.3em]">Explore</span>
         <motion.div
@@ -192,7 +192,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Marquee — 2 copies, seamless loop */}
-      <div className="absolute bottom-0 w-full overflow-hidden bg-gray-50/80 backdrop-blur-md border-t border-gray-100 py-3 flex z-20">
+      <div className="absolute bottom-0 w-full overflow-hidden bg-gray-50/80 backdrop-blur-md border-t border-gray-100 py-2 sm:py-3 flex z-20">
         <div className="animate-marquee whitespace-nowrap flex items-center">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="flex items-center space-x-8 md:space-x-16 px-4 md:px-8">
